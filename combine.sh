@@ -66,11 +66,6 @@ done
 # .logを外す
 selected_file=$(echo $selected_log_file | sed 's/\.log$//')
 
-# ls -v | grep $selected_file
-# for log in $(ls -v | grep $selected_file); do
-#     echo $log
-# done
-
 # logファイルを数字順にソートしてループ
 for log in $(ls -v | grep $selected_file); do
     # 拡張子が.gzのlogファイルをunzipする
@@ -89,6 +84,12 @@ for log in $(ls -v | grep $selected_file); do
 
     # grepコマンドを使って抽出したテキストを出力
     grep -E 'HTTP status | ERROR | error' "$log"
+
+    # if [[ "$selected_file" = "2-nodeStartPM2-error" ]] || [[ "$selected_file" = "3-initiatorStartPM2-error" ]]; then
+    #     grep -E 'HTTP status | ERROR | error' "$log"
+    # else
+    #     cat "$log"
+    # fi
 done >"combined_logs/$selected_file-combined.log"
 
 # combined_logsディレクトリ内の$selected_file-combined.logを開く
