@@ -9,17 +9,18 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 # 表示するログファイルに関する変数
-log_files=($(ls | grep '\.log$'))
+log_files=($(ls $HOME/.pm2/logs/ | grep '\.log$'))
 num_log_files=${#log_files[@]}
 page_size=10
 page_num=0
+LOGS_COMBINED=$HOME/.pm2/logs/logs_combined
 
 # pm2ログディレクトリに移動
 cd ~/.pm2/logs
 
 # logs_combinedというディレクトリが無ければ作成
-if [ ! -d "logs_combined" ]; then
-    mkdir logs_combined
+if [ ! -d "$LOGS_COMBINED" ]; then
+    mkdir $LOGS_COMBINED
 fi
 
 # 関数show_log_files
@@ -81,7 +82,7 @@ done
 # .logを外す
 selected_file=$(echo $selected_log_file | sed 's/\.log$//')
 
-# logファイルを数字順にソートしてループ
+# logファイルを数字順にソートしてループ_1
 for log in $(ls -v | grep $selected_file); do
     # 拡張子が.gzのlogファイルをunzipする
     if [[ "$log" == *.gz ]]; then
@@ -89,7 +90,7 @@ for log in $(ls -v | grep $selected_file); do
     fi
 done
 
-# logファイルを数字順にソートしてループ
+# logファイルを数字順にソートしてループ_2
 for log in $(ls -v | grep $selected_file); do
 
     creation_date=$(stat -c %y $log | awk -F '.' '{print $1}')
@@ -100,17 +101,14 @@ for log in $(ls -v | grep $selected_file); do
     echo "--------------------------------------------------------------------------------"
 
     # grepコマンドを使って抽出したテキストを出力
-    grep -E 'HTTP status | ERROR | error' "$log"
+    # grep -E 'HTTP status | ERROR | error' "$log"
 
-    # if [[ "$selected_file" = "2-nodeStartPM2-error" ]] || [[ "$selected_file" = "3-initiatorStartPM2-error" ]]; then
-    #     grep -E 'HTTP status | ERROR | error' "$log"
-    # else
-    #     cat "$log"
-    # fi
-done >"logs_combined/$selected_file-combined.log"
+    if [[ "$selected_file" = "2-nodeStartPM2-error" ]] || [[ "$selected_file" = "3-initiatorStartPM2-error" ]]; then
+        grep -E 'HTTP status | ERROR | error' "$log"
+    else
+        cat "$log"
+    fi
+done >"$LOGS_COMBINED/$selected_file-combined.log"
 
 # logs_combinedディレクトリ内の$selected_file-combined.logを開く
-less logs_combined/"$selected_file-combined.log"
-
-# 2..10までを圧縮
-# ./assyuku.sh
+less $LOGS_COMBINED/"$selected_file-combined.log"
