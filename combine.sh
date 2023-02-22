@@ -92,22 +92,6 @@ done
 # logファイルを数字順にソートしてループ
 for log in $(ls -v | grep $selected_file); do
 
-    # 圧縮されたファイルが作成された日時を取得する
-    # `stat`コマンドは、ファイルやディレクトリの情報を取得
-    # `-c %y`オプションは、ファイルの最終更新日時を表示するためのフォーマットを指定するオプション
-    # `%y`は、以下のような形式で表示
-    # YYYY-MM-DD HH:MM:SS
-    # $ stat -c %y test.txt
-    # 2021-06-08 12:34:56
-    # https://atmarkit.itmedia.co.jp/ait/articles/1706/29/news027.html
-
-    # `awk -F '.' '{print $1}'`はstat コマンドによって出力された文字列から . で区切られた左側の部分を取り出します。
-    # つまり、小数点以下の情報を除外します。{print $1}は、awkプログラミング言語内での表記です。
-    # これは、awkプログラミング言語で、入力テキストの各行を分割してフィールドとして取り扱うことができます。
-    # $1は、各行の1番目のフィールドを参照することを意味します。
-    # print $1は、各行の1番目のフィールドを出力することを意味する。
-    # https://atmarkit.itmedia.co.jp/ait/articles/1706/02/news017.html
-
     creation_date=$(stat -c %y $log | awk -F '.' '{print $1}')
     # 区切り線を出力
     echo
