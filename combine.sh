@@ -22,7 +22,7 @@ if [ ! -d "logs_combined" ]; then
     mkdir logs_combined
 fi
 
-# show log files
+# 関数show_log_files
 function show_log_files() {
     start=$((page_size * page_num))
     end=$((start + page_size - 1))
