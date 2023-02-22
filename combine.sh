@@ -83,8 +83,9 @@ done
 selected_file=$(echo $selected_log_file | sed 's/\.log$//')
 
 # logファイルを数字順にソートしてループ_1
+# -v 自然な数字(version)で順でソート
 for log in $(ls -v | grep $selected_file); do
-    # 拡張子が.gzのlogファイルをunzipする
+    # 拡張子が.gzのlogファイルをunzip
     if [[ "$log" == *.gz ]]; then
         gunzip -f "$log"
     fi
