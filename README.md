@@ -30,22 +30,22 @@ sudo apt install less
 ## 実行コマンド
 1. スクリプトを実行するために、ターミナルを開き、任意のディレクトリに移動します。
    
-2. 
+2. リポジトリをgithubからクローンします
 ```
 git clone https://github.com/11ppm/pm2_log.git
 ```
 
-3. 
+3. pm2_logディレクトリに移動します
 ```
 cd pm2_log
 ```
 
-4. 
+4. combine.shファイルに実行権限を与えます
 ```
 chmod +x combine.sh
 ```
 
-5.
+5.combine.shを実行します
 ```
 ./combine.sh
 ```
