@@ -55,7 +55,7 @@ while true; do
     fi
 
     if [[ $choice == "q" ]]; then
-        break
+        exit 0
     elif [[ $choice =~ ^[0-9]+$ ]]; then
         selected_index=$((choice - 1))
         if [[ $selected_index -ge $num_log_files ]]; then
