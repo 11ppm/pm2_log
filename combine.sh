@@ -102,10 +102,9 @@ for log in $(ls -v | grep $selected_file); do
     echo "--------------------------------------------------------------------------------"
 
     # grepコマンドを使って抽出したテキストを出力
-    # grep -E 'HTTP status | ERROR | error' "$log"
 
     if [[ "$selected_file" = "2-nodeStartPM2-error" ]] || [[ "$selected_file" = "3-initiatorStartPM2-error" ]]; then
-        grep -E 'HTTP status | ERROR | error' "$log"
+        grep -E 'HTTP status|ERROR|error' "$log"
     else
         cat "$log"
     fi
